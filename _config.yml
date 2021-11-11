@@ -1,2 +1,7 @@
 include:
   - .well-known
+
+collections:
+  providers:
+    output: true
+    permalink: /:collection/:path/:categories/:name/:output_ext

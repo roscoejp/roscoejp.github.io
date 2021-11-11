@@ -1,3 +1,6 @@
+---
+permalink: /.well-known/terraform.json
+---
 {
   "modules.v1": "/modules/",
   "providers.v1": "/providers/"

@@ -1,0 +1,4 @@
+{
+  "modules.v1": "/sample-terraform-registry/modules/",
+  "providers.v1": "/sample-terraform-registry/providers/"
+}

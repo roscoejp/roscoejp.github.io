@@ -1,0 +1,6 @@
+{
+{% for member in site.data.members %}
+  "{{ member.github }}": "{{ member.name }}"
+  {%- unless forloop.last %},{% endunless -%}
+{% endfor %}
+}

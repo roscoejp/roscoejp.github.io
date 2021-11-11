@@ -1,7 +1,9 @@
 include:
   - .well-known
 
-collections:
-  posts:
-    output: true
-    permalink: /:categories/index.json
+defaults:
+  - scope:
+      path: "proviers/*/*/_posts"
+      type: posts
+    values:
+       permalink: /:categories/index.json

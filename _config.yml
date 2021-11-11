@@ -1,2 +1,7 @@
 include:
   - .well-known
+
+collections:
+  posts:
+    output: true
+    permalink: /:categories/index.json

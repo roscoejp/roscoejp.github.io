@@ -1,9 +1,0 @@
-include:
-  - .well-known
-
-defaults:
-  - scope:
-      path: "proviers/*/*/_posts"
-      type: posts
-    values:
-       permalink: /:categories/index.json

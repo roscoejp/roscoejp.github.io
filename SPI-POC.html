@@ -1,0 +1,134 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>SPI POC</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- Don't @ me I'm lazy -->
+  <style>
+    body {
+      padding-top: 5rem;
+    }
+
+    /*Override the wiki gridstyle width*/
+    #adversary>div {
+      width: auto !important;
+      grid-template-rows: 0% 17% 7% auto auto auto auto auto auto !important;
+    }
+
+    #adversaryname, #basedifficulty { display: none !important; }
+    #flag { border-top: 0px !important; padding-top: 0px !important; }
+
+    #adversary .inlineicon {
+      height: 1.2em;
+      width: auto;
+    }
+
+    #adversary img {
+      border: 0;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+        aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Begin page content -->
+  <main role="main" class="container-fluid">
+    <div class="row">
+      <!-- Cheeky way to move the select box out of nav and into page elements -->
+      <div id="adversaryname-override" style="background-color:rgb(225,220,190); border-left: 20px solid black; border-top: 20px solid black; border-color:rgb(225,220,190); border-radius: 18px 18px 0px 0px; display:flex; justify-content:center; align-items:center; font-size:16pt; box-shadow: 0px 3px 0px 0px rgba(0,0,0,0.6); z-index:2; width: 100%;">
+        <div style="margin-top:-18px;">
+          <select id="adversary-select" class="custom-select bg-transparent pt-0 font-weight-bold">
+          <option selected>Adversary...</option>
+          <option value="sweden">The Kingdom of Sweden</option>
+          <option value="england">The Kingdom of England</option>
+        </select>
+      </div>
+      </div>
+      <div id="adversary" class="w-100">
+      </div>
+    </div>
+  </main><!-- /.container -->
+
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+  <!-- Example of lazy-loading adversaries on dropdown change -->
+  <script type="text/javascript">
+    $(document).ready(function () {
+      // callback for use with nation change event
+      var nationCallback = function (html) {
+        $("#adversary").html(html)
+      }
+      // nation select to load nation and update querystring w/o reload
+      $("#adversary-select").change(function () {
+        var nation = this.value;
+        if (nation == "Adversary...") {
+          $("#adversary").html("")
+        } else {
+          var url = "./adversaries/" + nation + ".html";
+          $.get(url, nationCallback);
+          if (history.pushState) {
+            const url = new URL(window.location);
+            url.searchParams.set('adversary', nation);
+            window.history.pushState(null, '', url.toString());
+          }
+        }
+      });
+      // update the nation on page load if querystring set
+      let params = new URL(document.location).searchParams;
+      let setNation = params.get("adversary");
+      $("#adversary-select").val(setNation);
+      $("#adversary-select").change();
+    });
+  </script>
+</body>
+
+</html>

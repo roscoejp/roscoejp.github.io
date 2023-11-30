@@ -112,23 +112,15 @@
         var nation = this.value;
         if (nation == "select") {
           $("#adversary").html("")
-          // Realistically you'd want to pull this out into a function to easily call from other spots
-          var url = "./adversaries/" + nation + ".html";
-          $.get(url, nationCallback);
-          if (history.pushState) {
-            const url = new URL(window.location);
-            url.searchParams.delete('adversary');
-            window.history.pushState(null, '', url.toString());
-          }  
-        } else {
-          var url = "./adversaries/" + nation + ".html";
-          $.get(url, nationCallback);
-          if (history.pushState) {
-            const url = new URL(window.location);
-            url.searchParams.set('adversary', nation);
-            window.history.pushState(null, '', url.toString());
-          }
-        }      
+        }
+        // Realistically you'd want to pull this out into a function to easily call from other spots 
+        var url = "./adversaries/" + nation + ".html";
+        $.get(url, nationCallback);
+        if (history.pushState) {
+          const url = new URL(window.location);
+          url.searchParams.set('adversary', nation);
+          window.history.pushState(null, '', url.toString());
+        }    
       });
       // update the nation on page load if querystring set
       let params = new URL(document.location).searchParams;

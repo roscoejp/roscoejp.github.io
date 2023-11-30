@@ -77,7 +77,7 @@
       <div id="adversaryname-override" style="background-color:rgb(225,220,190); border-left: 20px solid black; border-top: 20px solid black; border-color:rgb(225,220,190); border-radius: 18px 18px 0px 0px; display:flex; justify-content:center; align-items:center; font-size:16pt; box-shadow: 0px 3px 0px 0px rgba(0,0,0,0.6); z-index:2; width: 100%;">
         <div style="margin-top:-18px;">
           <select id="adversary-select" class="custom-select bg-transparent pt-0 font-weight-bold">
-          <option selected>Adversary...</option>
+          <option selected>Select Adversary...</option>
           <option value="sweden">The Kingdom of Sweden</option>
           <option value="england">The Kingdom of England</option>
         </select>
@@ -110,7 +110,7 @@
       // nation select to load nation and update querystring w/o reload
       $("#adversary-select").change(function () {
         var nation = this.value;
-        if (nation == "Adversary...") {
+        if (nation == "Select Adversary...") {
           $("#adversary").html("")
         } else {
           var url = "./adversaries/" + nation + ".html";
@@ -124,7 +124,7 @@
       });
       // update the nation on page load if querystring set
       let params = new URL(document.location).searchParams;
-      let setNation = params.get("adversary");
+      let setNation = params.get("adversary") || "Select Adversary...";
       $("#adversary-select").val(setNation);
       $("#adversary-select").change();
     });
